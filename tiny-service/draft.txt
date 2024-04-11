@@ -1,0 +1,25 @@
+kubectl apply -f ./deploy.yaml
+kubectl delete -f ./deploy.yaml
+
+kubectl describe ingress demo-tiny-service -n default
+
+
+kubectl create namespace demo --dry-run=client -o yaml | kubectl apply -f -
+
+kubectl apply -f ./deploy.yaml -n demo
+kubectl describe ingress demo-tiny-service -n demo
+
+demo-tiny-service.89e9f69b-2e4b-4325-a2ed-40ce5c9c41c5.k8s.civo.com 
+demo-tiny-service.89e9f69b-2e4b-4325-a2ed-40ce5c9c41c5.k8s.civo.com
+
+kubectl get ingress -l component=tiny-service --all-namespaces
+
+
+---
+kubectl create namespace demo --dry-run=client -o yaml | kubectl apply -f -
+kubectl apply -f ./deploy.demo-tiny-service.yaml -n demo
+kubectl describe ingress demo-tiny-service -n demo
+
+change replicas + apply
+change env + apply
+

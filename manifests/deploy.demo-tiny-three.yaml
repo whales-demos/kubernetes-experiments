@@ -1,0 +1,63 @@
+---
+# Service
+apiVersion: v1
+kind: Service
+metadata:
+  name: demo-tiny-three
+  labels:
+    component: tiny
+spec:
+  selector:
+    app: demo-tiny-three
+  ports:
+    - port: 80
+      targetPort: 8080
+---
+# Deployment
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: demo-tiny-three
+  labels:
+    component: tiny
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: demo-tiny-three
+  template:
+    metadata:
+      labels:
+        app: demo-tiny-three
+    spec:
+      containers:
+        - name: demo-tiny-three
+          image: philippecharriere494/tiny-service:0.0.3
+          env:
+          - name: MESSAGE
+            value: "👋 Hello World 🤗"
+          ports:
+            - containerPort: 8080
+          #imagePullPolicy: Always
+          imagePullPolicy: IfNotPresent
+
+---
+# Ingress
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: demo-tiny-three
+  labels:
+    component: tiny
+spec:
+  rules:
+    - host: demo-tiny-three.3f1e2ff0-d14f-46a0-9601-c78cd127f940.k8s.civo.com
+      http:
+        paths:
+        - path: /
+          pathType: Prefix
+          backend:
+            service: 
+              name: demo-tiny-three
+              port: 
+                number: 80

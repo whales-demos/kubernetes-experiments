@@ -1,0 +1,4 @@
+koala
+3f1e2ff0-d14f-46a0-9601-c78cd127f940.k8s.civo.com
+External IP: https://74.220.24.95:6443
+API Endpoint: https://74.220.24.95:6443
